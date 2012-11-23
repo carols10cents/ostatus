@@ -46,5 +46,9 @@ describe OStatus::Feed do
     it "should be able to sort link elements with unknown MIME types" do
       @feed = OStatus::Feed.from_url('test/mime_type_bug_feed.atom')
     end
+
+    it "can parse HTML5 pages for their link elements" do
+      @feed = OStatus::Feed.from_url('test/html5.html')
+    end
   end
 end

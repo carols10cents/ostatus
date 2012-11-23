@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'atom'
+require 'nokogiri'
 
 require_relative 'entry'
 require_relative 'author'
@@ -39,8 +40,8 @@ module OStatus
       if str
 
         if str =~ /<html/
-          doc = LibXML::XML::HTMLParser.string(str).parse
-          links = doc.find(
+          doc = Nokogiri::HTML::Document.parse(str)
+          links = doc.xpath(
             "//*[contains(concat(' ',normalize-space(@rel),' '), 'alternate')]"
           ).map {|el|
             {:type => el.attributes['type'].to_s,
