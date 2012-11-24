@@ -42,7 +42,7 @@ module OStatus
         if str =~ /<html/
           doc = Nokogiri::HTML::Document.parse(str)
           links = doc.xpath(
-            "//*[contains(concat(' ',normalize-space(@rel),' '), 'alternate')]"
+            "//*[contains(concat(' ',normalize-space(@rel),' '), 'alternate') or contains(concat(' ',normalize-space(@rel),' '), 'activities')]"
           ).map {|el|
             {:type => el.attributes['type'].to_s,
              :href => el.attributes['href'].to_s}
