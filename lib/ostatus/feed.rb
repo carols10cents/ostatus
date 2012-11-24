@@ -47,8 +47,8 @@ module OStatus
             {:type => el.attributes['type'].to_s,
              :href => el.attributes['href'].to_s}
           }.sort {|a, b|
-            MIME_ORDER.index(b[:type]) || -1 <=>
-            MIME_ORDER.index(a[:type]) || -1
+            (MIME_ORDER.index(b[:type]) || -1) <=>
+            (MIME_ORDER.index(a[:type]) || -1)
           }
 
           # Resolve relative links
