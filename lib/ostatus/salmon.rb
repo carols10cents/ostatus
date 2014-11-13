@@ -153,7 +153,7 @@ module OStatus
       # Armored Data <me:data>
       data = @entry.to_xml
       @plaintext = data
-      data_armored = Base64::urlsafe_encode64(data)
+      data_armored = Base64::urlsafe_encode64(data).force_encoding('utf-8')
       elem = XML::Node.new 'data', data_armored, me_ns
       elem.attributes['type'] = 'application/atom+xml'
       data_type_armored = 'YXBwbGljYXRpb24vYXRvbSt4bWw='
@@ -182,7 +182,7 @@ module OStatus
     # Return the EMSA string for this Salmon instance given the size of the
     # public key modulus.
     def signature modulus_byte_length
-      plaintext = Digest::SHA2.new(256).digest(@plaintext)
+      plaintext = Digest::SHA2.new(256).digest(@plaintext).force_encoding('utf-8')
 
       prefix = "\x30\x31\x30\x0d\x06\x09\x60\x86\x48\x01\x65\x03\x04\x02\x01\x05\x00\x04\x20"
       padding_count = modulus_byte_length - prefix.bytes.count - plaintext.bytes.count - 3
